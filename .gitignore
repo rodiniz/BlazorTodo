@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/BazorTodo
+/BazorTodo/bin/Debug/netstandard2.1
+/BazorTodo/bin/Release/netstandard2.1
+/BazorTodo/obj
