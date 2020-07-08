@@ -1,35 +1,25 @@
-name: 'Publish application'
-on: push
+name: BlazorOnNetlify #your workflow name
+on: [push] #on push to your branch run this workflow
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        # Checkout the code
-        - uses: actions/checkout@v2
-
-        # Install .NET Core SDK
-        - name: Setup .NET Core
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: 3.1.x
-
-        # Run tests
-        - name: Test
-          run: dotnet test
-
-        # Generate the website
-        - name: Publish
-          run: dotnet publish ./BazorTodo.sln  --configuration Release
-
-        # Publish the website
-        - name: Publish with dotnet
-          run: dotnet publish ./BazorTodo.sln --configuration Release --output build
-        - name: Deploy to Github Pages
-          uses: JamesIves/github-pages-deploy-action@releases/v3
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            BASE_BRANCH: master
-            BRANCH: gh-pages
-            FOLDER: build/wwwroot
-            CLEAN: true
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100 #Blazor WebAssembly requires 3.1.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Publish Blazor webassembly using dotnet 
+#create Blazor WebAssembly dist output folder in the project directory
+      run: dotnet publish -c Release --no-build -o ./
+    - name: Publish generated Blazor webassembly to Netlify
+      uses: netlify/actions/cli@master #uses Netlify Cli actions
+      env: # these environment variables are added in github secrets
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      with:
+          args: deploy --dir=BlazorTodo/dist --prod #push dist folder to Netlify
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]' 
