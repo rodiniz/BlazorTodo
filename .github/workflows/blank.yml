@@ -10,6 +10,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.300 #Blazor WebAssembly requires 3.1.100
+    - name: Build with dotnet
+      run: dotnet build ./BazorTodo.sln --configuration Release:  
     - name: Publish Blazor webassembly using dotnet
       run: dotnet publish ./BazorTodo.sln -c Release --no-build -o ./
     - name: Publish generated Blazor webassembly to Netlify
