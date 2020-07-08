@@ -23,15 +23,13 @@ jobs:
           run: dotnet publish ./BazorTodo.sln  --configuration Release
 
         # Publish the website
-        - name: GitHub Pages action
-          if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
-          uses: peaceiris/actions-gh-pages@v3.6.1
+        - name: Publish with dotnet
+          run: dotnet publish ./BazorTodo.sln --configuration Release --output build
+        - name: Deploy to Github Pages
+          uses: JamesIves/github-pages-deploy-action@releases/v3
           with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_branch: gh-pages
-            publish_dir: bin/Release/netstandard2.1/publish/wwwroot
-            allow_empty_commit: false
-            keep_files: false
-            force_orphan: true
-            # TODO uncomment the following line if you have a custom domain name
-            # cname: demo.meziantou.net
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            BASE_BRANCH: master
+            BRANCH: gh-pages
+            FOLDER: build/wwwroot
+            CLEAN: true
