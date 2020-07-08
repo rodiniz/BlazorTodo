@@ -9,9 +9,8 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.100 #Blazor WebAssembly requires 3.1.100
-    - name: Publish Blazor webassembly using dotnet 
-#create Blazor WebAssembly dist output folder in the project directory
+        dotnet-version: 3.1.300 #Blazor WebAssembly requires 3.1.100
+    - name: Publish Blazor webassembly using dotnet
       run: dotnet publish ./BazorTodo.sln -c Release --no-build -o ./
     - name: Publish generated Blazor webassembly to Netlify
       uses: netlify/actions/cli@master #uses Netlify Cli actions
