@@ -18,7 +18,7 @@
                                         
                                         <li class="@(todo.Done ? "completed":"")">
                                             <div class="form-check"> <label class="form-check-label"> 
-                                            <input class="checkbox" type="checkbox" @bind-value="todo.Done" @onclick="()=>MarkAsDone(todo.Index)"> @todo.Description
+                                            <input class="checkbox" type="checkbox" @bind="todo.Done" @onclick="()=>MarkAsDone(todo.Index)"> @todo.Description
                                             <i class="input-helper"></i></label> </div> 
                                      
                                         </li>
