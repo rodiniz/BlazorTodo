@@ -1,5 +1,4 @@
 ﻿@page "/todoList"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <div class="page-content page-container" id="page-content">
         <div class="padding">
@@ -13,12 +12,12 @@
                             <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn" @onclick="AddTodo">Add</button> </div>
                             <div class="list-wrapper">
                                 <ul class="d-flex flex-column-reverse todo-list">
-                                    @foreach (var todo in TodoState.Value.Todos)
+                                    @for (int position = 0 ; position < TodoState.Todos.Count; ++position)
                                     {
-                                        
+                                        var todo = TodoState.Todos[position];
                                         <li class="@(todo.Done ? "completed":"")">
                                             <div class="form-check"> <label class="form-check-label"> 
-                                            <input class="checkbox" type="checkbox" @bind="todo.Done" @onclick="()=>MarkAsDone(todo.Index)"> @todo.Description
+                                            <input class="checkbox" type="checkbox" @bind="todo.Done" @onclick="()=>MarkAsDone(position)"> @todo.Description
                                             <i class="input-helper"></i></label> </div> 
                                      
                                         </li>

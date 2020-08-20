@@ -3,11 +3,11 @@ using BazorTodo.Model;
 
 namespace BazorTodo.Store
 {
-    public class TodoState
+    public class TodoState : ITodoState
     {
         public List<Todo> Todos { get; }
 
-        public TodoState(List<Todo> _todos)
+        public  TodoState(List<Todo> _todos)
         {
             Todos = _todos;
         }
