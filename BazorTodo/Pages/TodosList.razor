@@ -7,23 +7,31 @@
                     <div class="card px-3">
                         <div class="card-body">
                             <h4 class="card-title">Todo list</h4>
-                            <div class="add-items d-flex"> 
-                            <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?" @bind-value="Description"> 
-                            <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn" @onclick="AddTodo">Add</button> </div>
+                            <EditForm Model="EditedTodo" OnValidSubmit="AddTodo"  >
+                                <DataAnnotationsValidator></DataAnnotationsValidator>
+                                <div class="add-items d-flex">
+                                    <InputText  class="form-control todo-list-input" label="What do you need to do today?" @bind-Value="EditedTodo.Description" />
+                                    <ValidationMessage For="@(() => EditedTodo.Description)" />
+                                    <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
+                                </div>
+                            </EditForm>
                             <div class="list-wrapper">
                                 <ul class="d-flex flex-column-reverse todo-list">
-                                    @for (int position = 0 ; position < TodoState.Todos.Count; ++position)
+                                    @for (int position = 0; position < TodoState.Todos.Count; ++position)
                                     {
                                         var todo = TodoState.Todos[position];
                                         <li class="@(todo.Done ? "completed":"")">
-                                            <div class="form-check"> <label class="form-check-label"> 
-                                            <input class="checkbox" type="checkbox" @bind="todo.Done" @onclick="()=>MarkAsDone(position)"> @todo.Description
-                                            <i class="input-helper"></i></label> </div> 
-                                     
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox" @bind-value="todo.Done" @onclick="()=>MarkAsDone(position)"> @todo.Description
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+
                                         </li>
-                                        
+
                                     }
-                             
+
                                 </ul>
                             </div>
                         </div>
